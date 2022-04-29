@@ -1,0 +1,145 @@
+def Coexistence_PickAndPlace():
+  set_target_payload(0.001000, [0.000000, 0.000000, 0.000000], [0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000])
+  set_gravity([0.0, 0.0, 9.82])
+  set_tool_communication(False, 115200, 0, 1, 1.5, 3.5)
+  set_tool_output_mode(0)
+  set_tool_digital_output_mode(0, 1)
+  set_tool_digital_output_mode(1, 1)
+  set_tool_voltage(0)
+  set_tcp(p[0.0,0.0,0.1,0.0,3.141592653589793,0.0])
+  set_safety_mode_transition_hardness(1)
+  step_count_e345b49f_f4fc_4252_8049_61100f605f11 = 0.0
+  thread Step_Counter_Thread_6e02cb4c_0c2f_49b9_8940_6a97172e0f33():
+    while (True):
+      step_count_e345b49f_f4fc_4252_8049_61100f605f11 = step_count_e345b49f_f4fc_4252_8049_61100f605f11 + 1.0
+      sync()
+    end
+  end
+  run Step_Counter_Thread_6e02cb4c_0c2f_49b9_8940_6a97172e0f33()
+  set_standard_analog_input_domain(0, 1)
+  set_standard_analog_input_domain(1, 1)
+  set_tool_analog_input_domain(0, 1)
+  set_tool_analog_input_domain(1, 1)
+  set_analog_outputdomain(0, 0)
+  set_analog_outputdomain(1, 0)
+  set_input_actions_to_default()
+  global Partbox=p[0.3,-0.4,0.0,0.0,0.0,0.0]
+  global Placelocation=p[0.0,0.5,0.3,0.0,0.0,0.0]
+  def calculate_point_to_move_towards(feature, direction, position_distance):
+    local posDir=[direction[0], direction[1], direction[2]]
+    if (norm(posDir) < 1e-6):
+      return get_target_waypoint()
+    end
+    local direction_vector_normalized=normalize(posDir)
+    local displacement_pose=p[direction_vector_normalized[0] * position_distance,direction_vector_normalized[1] * position_distance,direction_vector_normalized[2] * position_distance,0,0,0]
+    local wanted_displacement_in_base_frame=pose_sub(pose_trans(feature, displacement_pose), feature)
+    return pose_add(get_target_waypoint(), wanted_displacement_in_base_frame)
+  end
+  while (True):
+    $ 1 "Robot Program"
+    $ 2 "Wait ib64=HI"
+    while (read_input_boolean_register(64) == False):
+      sync()
+    end
+    $ 3 "Switch ii24_step"
+    switch_1 = read_input_integer_register(24)
+    $ 4 "Case 1"
+    if (1 == switch_1):
+      $ 5 "'Move to Home position'"
+      # 'Move to Home position'
+      $ 6 "Home"
+      movej([1.762613743602493E-10, -1.3013558115863404, -1.7459769588716432, -0.879658046529256, 1.5707963266702691, 1.2462685963511231E-10], a=1.3962634015954636, v=1.0471975511965976)
+    elif (2 == switch_1):
+      $ 7 "Case 2"
+      $ 8 "'Read new position and active workspace and move there'"
+      # 'Read new position and active workspace and move there'
+      $ 9 "Pos≔p[if24_x,if25_y,if26_z,if27_rx,if28_ry,if29_rz]"
+      global Pos=p[read_input_float_register(24),read_input_float_register(25),read_input_float_register(26),read_input_float_register(27),read_input_float_register(28),read_input_float_register(29)]
+      $ 10 "Switch ii25_actWspace"
+      switch_2 = read_input_integer_register(25)
+      $ 11 "Case 0"
+      if (0 == switch_2):
+        $ 12 "MoveJ"
+        $ 13 "Pos" "breakAfter"
+        movej(pose_trans(Partbox, Pos), a=1.3962634015954636, v=1.0471975511965976)
+      elif (1 == switch_2):
+        $ 14 "Case 1"
+        $ 15 "MoveJ"
+        $ 16 "Pos" "breakAfter"
+        movej(pose_trans(Placelocation, Pos), a=1.3962634015954636, v=1.0471975511965976)
+      end
+    elif (3 == switch_1):
+      $ 17 "Case 3"
+      $ 18 "'Pick part (simulated by wait)'"
+      # 'Pick part (simulated by wait)'
+      $ 19 "Wait: 2.0"
+      sleep(2.0)
+    elif (4 == switch_1):
+      $ 20 "Case 4"
+      $ 21 "'Lift part (lift 20cm)'"
+      # 'Lift part (lift 20cm)'
+      $ 22 "MoveL"
+      $ 23 "Direction: Partbox Z+"
+      global move_thread_flag_23=0
+      thread move_thread_23():
+        enter_critical
+        move_thread_flag_23 = 1
+        local towardsPos=calculate_point_to_move_towards(p[0.3,-0.4,0.0,0.0,0.0,0.0], [0.0,0.0,1.0], 0.2)
+        movel(towardsPos, a=1.2, v=0.25)
+        move_thread_flag_23 = 2
+        exit_critical
+      end
+      move_thread_flag_23 = 0
+      move_thread_han_23 = run move_thread_23()
+      while (True):
+        sleep(1.0E-10)
+        if (move_thread_flag_23 > 1):
+          join move_thread_han_23
+          $ 24 "Until (distance)"
+          break
+        end
+        sync()
+      end
+    elif (5 == switch_1):
+      $ 25 "Case 5"
+      $ 26 "'Place part (simulated by wait)'"
+      # 'Place part (simulated by wait)'
+      $ 27 "Wait: 2.0"
+      sleep(2.0)
+      $ 28 "MoveL"
+      $ 29 "Direction: Placelocation Z+"
+      global move_thread_flag_29=0
+      thread move_thread_29():
+        enter_critical
+        move_thread_flag_29 = 1
+        local towardsPos=calculate_point_to_move_towards(p[0.0,0.5,0.3,0.0,0.0,0.0], [0.0,0.0,1.0], 0.1)
+        movel(towardsPos, a=1.2, v=0.25)
+        move_thread_flag_29 = 2
+        exit_critical
+      end
+      move_thread_flag_29 = 0
+      move_thread_han_29 = run move_thread_29()
+      while (True):
+        sleep(1.0E-10)
+        if (move_thread_flag_29 > 1):
+          join move_thread_han_29
+          $ 30 "Until (distance)"
+          break
+        end
+        sync()
+      end
+    else:
+      $ 31 "Default Case"
+      $ 32 "'Do nothing (just handshake)'"
+      # 'Do nothing (just handshake)'
+    end
+    $ 33 "Set ob64=On"
+    write_output_boolean_register(64, True)
+    $ 34 "Wait ib64=LO"
+    while (read_input_boolean_register(64) == True):
+      sync()
+    end
+    $ 35 "Set ob64=Off"
+    write_output_boolean_register(64, False)
+  end
+end

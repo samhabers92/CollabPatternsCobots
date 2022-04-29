@@ -1,0 +1,16 @@
+ Program
+   Robot Program
+     Wait ib64=HI
+     Pos1≔p[if24_x,if25_y,if26_z,if27_rx,if28_ry,if29_rz]
+     Switch ii25_actWspace
+       Case 1
+         MoveL
+           Pos1
+       Default Case
+         MoveL
+           Pos1
+     Wait: 2.0
+     Home
+     Set ob64=On
+     Wait ib64=LO
+     Set ob64=Off

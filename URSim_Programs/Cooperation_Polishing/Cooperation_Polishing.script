@@ -1,0 +1,72 @@
+def Cooperation_Polishing():
+  set_safety_mode_transition_hardness(1)
+  set_tcp(p[0.0,0.0,0.1,0.0,3.141592653589793,0.0])
+  step_count_97ffadbd_7849_43cb_897e_8093dde8d4d6 = 0.0
+  thread Step_Counter_Thread_f8653708_5031_4afd_b6a7_d47d882d6a2e():
+    while (True):
+      step_count_97ffadbd_7849_43cb_897e_8093dde8d4d6 = step_count_97ffadbd_7849_43cb_897e_8093dde8d4d6 + 1.0
+      sync()
+    end
+  end
+  run Step_Counter_Thread_f8653708_5031_4afd_b6a7_d47d882d6a2e()
+  set_tool_communication(False, 115200, 0, 1, 1.5, 3.5)
+  set_tool_output_mode(0)
+  set_tool_digital_output_mode(0, 1)
+  set_tool_digital_output_mode(1, 1)
+  set_tool_voltage(0)
+  set_standard_analog_input_domain(0, 1)
+  set_standard_analog_input_domain(1, 1)
+  set_tool_analog_input_domain(0, 1)
+  set_tool_analog_input_domain(1, 1)
+  set_analog_outputdomain(0, 0)
+  set_analog_outputdomain(1, 0)
+  set_input_actions_to_default()
+  set_target_payload(0.001000, [0.000000, 0.000000, 0.000000], [0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000])
+  set_gravity([0.0, -1.2026031567627009E-15, -9.82])
+  global Surface=p[0.6500000000000007,-0.34999999999999915,0.85,-3.505842142480379E-15,3.141592653589793,-8.89940768973905E-16]
+  while (True):
+    $ 1 "Robot Program"
+    $ 2 "Wait ib64=HI"
+    while (read_input_boolean_register(64) == False):
+      sync()
+    end
+    $ 3 "Switch ii24_step"
+    switch_1 = read_input_integer_register(24)
+    $ 4 "Case 1"
+    if (1 == switch_1):
+      $ 5 "'Move to Home position'"
+      # 'Move to Home position'
+      $ 6 "Home"
+      movej([0.13740184131037092, -3.085235452677038, 2.346942705047924, 2.309089074218888, -1.570796327, -1.7081981683103642], a=1.3962634015954636, v=1.0471975511965976)
+    elif (2 == switch_1):
+      $ 7 "Case 2"
+      $ 8 "'Read startPos, endPos'"
+      # 'Read startPos, endPos'
+      $ 9 "startPos≔p[if24_x,if25_y,if26_z,if27_rx,if28_ry,if29_rz]"
+      global startPos=p[read_input_float_register(24),read_input_float_register(25),read_input_float_register(26),read_input_float_register(27),read_input_float_register(28),read_input_float_register(29)]
+      $ 10 "endPos≔p[if30_x,if31_y,if32_z,if33_rx,if34_ry,if35_rz]"
+      global endPos=p[read_input_float_register(30),read_input_float_register(31),read_input_float_register(32),read_input_float_register(33),read_input_float_register(34),read_input_float_register(35)]
+      $ 11 "'Move: startPos -> endPos -> startPos'"
+      # 'Move: startPos -> endPos -> startPos'
+      $ 12 "MoveL"
+      $ 13 "startPos" "breakAfter"
+      movel(pose_trans(Surface, startPos), a=0.5, v=0.1)
+      $ 14 "endPos" "breakAfter"
+      movel(pose_trans(Surface, endPos), a=0.5, v=0.1)
+      $ 15 "startPos" "breakAfter"
+      movel(pose_trans(Surface, startPos), a=0.5, v=0.1)
+    else:
+      $ 16 "Default Case"
+      $ 17 "'Do nothing (just handshake)'"
+      # 'Do nothing (just handshake)'
+    end
+    $ 18 "Set ob64=On"
+    write_output_boolean_register(64, True)
+    $ 19 "Wait ib64=LO"
+    while (read_input_boolean_register(64) == True):
+      sync()
+    end
+    $ 20 "Set ob64=Off"
+    write_output_boolean_register(64, False)
+  end
+end

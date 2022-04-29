@@ -1,0 +1,269 @@
+def Collaboration_CollaborativeAssembly():
+  set_tool_communication(False, 115200, 0, 1, 1.5, 3.5)
+  set_tool_output_mode(0)
+  set_tool_digital_output_mode(0, 1)
+  set_tool_digital_output_mode(1, 1)
+  set_tool_voltage(0)
+  set_tcp(p[0.0,0.0,0.1,0.0,3.141592653589793,0.0])
+  set_standard_analog_input_domain(0, 1)
+  set_standard_analog_input_domain(1, 1)
+  set_tool_analog_input_domain(0, 1)
+  set_tool_analog_input_domain(1, 1)
+  set_analog_outputdomain(0, 0)
+  set_analog_outputdomain(1, 0)
+  set_input_actions_to_default()
+  set_gravity([0.0, 0.0, 9.82])
+  set_target_payload(0.001000, [0.000000, 0.000000, 0.000000], [0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000])
+  step_count_4fe5a83a_1f87_41ff_b2a3_8ac7ab0c5093 = 0.0
+  thread Step_Counter_Thread_dca98b7d_2067_4278_9df4_1ac51f64c903():
+    while (True):
+      step_count_4fe5a83a_1f87_41ff_b2a3_8ac7ab0c5093 = step_count_4fe5a83a_1f87_41ff_b2a3_8ac7ab0c5093 + 1.0
+      sync()
+    end
+  end
+  run Step_Counter_Thread_dca98b7d_2067_4278_9df4_1ac51f64c903()
+  set_safety_mode_transition_hardness(1)
+  global Workspace1=p[0.4,-0.3,0.1,0.0,0.0,0.0]
+  global qualityCheck=0
+  global AssemblyBottom_p=p[.649999997801, -.050000000479, .549999999932, -1.965081269796, 1.949506800063, -.418909375262]
+  global AssemblyBottom_q=[0.12267343108642059, -2.282637733190324, -1.2718060948443144, -0.7041475594319389, 4.691656736745211, -0.10992962082584157]
+  global AssemblyFront_p=p[.649999998015, -.050000000445, .550000000188, 1.529625660456, -1.560882022213, -.986643350061]
+  global AssemblyFront_q=[0.1937690443825728, -1.6140339861927089, -1.6204373828598744, -2.5801461436850524, 4.918901150601778, -0.08678397085685141]
+  global AssemblyTop_p=p[.649999997611, -.050000000523, .349999999968, .496406174586, -.546146902749, -1.518456205709]
+  global AssemblyTop_q=[0.1726975303243936, -2.0600370025677996, -1.0051657010836736, -4.135604606216923, 4.851375521811807, 0.13730603704813316]
+  global PosScrewsOffset_p=p[.474999999158, .250000005176, .199999999906, 1.193055255027, -1.232785818586, -1.234110075465]
+  global PosScrewsOffset_q=[1.1117776091364702, -1.7555738765964106, -2.1825987975983896, -2.3468865802970442, 5.857228499941753, 0.002015883992922583]
+  global PosScrews_p=p[.474999999158, .250000005176, .109999999852, 1.193055255027, -1.232785818586, -1.234110075465]
+  global PosScrews_q=[1.1117776090840445, -1.9687689650683335, -2.24491600034262, -2.0713742890806737, 5.857228499889326, 0.0020158839926820763]
+  global ScrewHandover_p=p[.650000000112, -.050000000110, .299999999891, 1.193055255026, -1.232785818585, -1.234110075466]
+  global ScrewHandover_q=[0.2029138996738078, -1.7692395555525424, -1.847171268212973, -2.6675708540812755, 4.948365379068806, 4.955703885240679E-4]
+  global PosBotPlOffset_p=p[.474999999952, -.099999997811, .199999999906, 1.193055255025, -1.232785818583, -1.234110075468]
+  global PosBotPlOffset_q=[0.149130876228033, -1.5518776343295118, -2.412762343283795, -2.319332661471769, 4.894582372476087, 4.5203931933901487E-4]
+  global PosBottomPlate_p=p[.474999999952, -.099999997811, .109999999870, 1.193055255025, -1.232785818583, -1.234110075468]
+  global PosBottomPlate_q=[0.14913087615664566, -1.8334141033539026, -2.491156680877105, -1.959401854854061, 4.894582372404702, 4.520393192834556E-4]
+  global PlateHandover_p=p[.650000000112, -.050000000110, .550000000109, 1.193055255026, -1.232785818585, -1.234110075466]
+  global PlateHandover_q=[0.20291389979235497, -1.678757010247753, -1.2967779799831964, -3.3084466876158523, 4.948365379187345, 4.955703886286855E-4]
+  global PosBoxOffset_p=p[.475000000219, -.225000003800, .250000000213, 1.193055255024, -1.232785818582, -1.234110075469]
+  global PosBoxOffset_q=[-0.2814077518917637, -1.6019644759548326, -2.1899003044134595, -2.4921193344869628, 4.464043875600752, 1.1303781128287378E-4]
+  global PosBox_p=p[.475000000219, -.225000003800, .149998712916, 1.193055255024, -1.232785818582, -1.234110075469]
+  global PosBox_q=[-0.28140775195481105, -1.820596541536097, -2.2952280697519543, -2.168159503567214, 4.464043875537703, 1.130378112297677E-4]
+  global ScanPosBottom_p=p[.486827438210, -.421362455296, .359312359907, -.957872589348, 1.443836625321, 1.251653093626]
+  global ScanPosBottom_q=[-0.17006572217049065, -1.8348093472733744, -1.8107522620491325, -1.331016757577026, 6.272970967590458, 0.03231009092683301]
+  global PosFroPlOffset_p=p[.474999999576, .024999999353, .199999999906, 1.193055255026, -1.232785818584, -1.234110075467]
+  global PosFroPlOffset_q=[0.6156213666632553, -1.514128978987503, -2.4482410275018682, -2.321786965990422, 5.3610726908750745, 8.964050385831118E-4]
+  global PosFrontPlate_p=p[.474999999576, .024999999353, .109999999870, 1.193055255026, -1.232785818584, -1.234110075467]
+  global PosFrontPlate_q=[0.6156213665873453, -1.8106823897162379, -2.5304174201823284, -1.9430571625811712, 5.361072690799162, 8.96405038489867E-4]
+  global ScanPosFront_p=p[.486827438210, -.421362455296, .359312359907, .034314372478, 2.093136742463, 2.049289237524]
+  global ScanPosFront_q=[-0.17006572217049154, -1.8348093472733833, -1.8107522620491583, -1.3310167575768617, 6.27297096759046, -1.171979967759901]
+  global PosTopPlOffset_p=p[.474999999399, .150000001237, .199999999906, 1.193055255026, -1.232785818585, -1.234110075466]
+  global PosTopPlOffset_q=[0.9509981821721543, -1.6190551061376102, -2.3440163133962275, -2.3215124357176813, 5.696449282756644, 0.0014740292990120807]
+  global PosTopPlate_p=p[.474999999399, .150000001237, .109999999866, 1.193055255026, -1.232785818585, -1.234110075466]
+  global PosTopPlate_q=[0.9509981821079492, -1.8756673484088218, -2.416305859315003, -1.9926106475275533, 5.696449282692438, 0.0014740292988486559]
+  global ScanPosTop_p=p[.486827438210, -.421362455296, .359312359907, -1.365343780435, -1.078598240332, -1.278344603166]
+  global ScanPosTop_q=[-0.17006572217049065, -1.8348093472733753, -1.8107522620491308, -1.331016757577034, 6.27297096759046, -2.9435819677597204]
+  while (True):
+    $ 2 "Robot Program"
+    $ 3 "Wait ib64=HI"
+    while (read_input_boolean_register(64) == False):
+      sync()
+    end
+    $ 4 "Switch ii24_step"
+    switch_1 = read_input_integer_register(24)
+    $ 5 "Case 0"
+    if (0 == switch_1):
+      $ 6 "'Just to start the program in home position'"
+      # 'Just to start the program in home position'
+      $ 7 "Home"
+      movej([8.92944443900068E-10, -1.0055551254619814, -1.899720618117387, -1.8212351845549204, 1.5707963261708011, 1.5707963276707613], a=1.3962634015954636, v=1.0471975511965976)
+    elif (1 == switch_1):
+      $ 8 "Case 1"
+      $ 9 "'Keep holding box in place for assembly'"
+      # 'Keep holding box in place for assembly'
+      $ 10 "Switch qualityCheck"
+      switch_2 = qualityCheck
+      $ 11 "Case 1"
+      if (1 == switch_2):
+        $ 12 "MoveJ"
+        $ 13 "AssemblyBottom" "breakAfter"
+        movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], AssemblyBottom_p)), qnear=AssemblyBottom_q), a=1.3962634015954636, v=1.0471975511965976)
+      elif (2 == switch_2):
+        $ 14 "Case 2"
+        $ 15 "MoveJ"
+        $ 16 "AssemblyFront" "breakAfter"
+        movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], AssemblyFront_p)), qnear=AssemblyFront_q), a=1.3962634015954636, v=1.0471975511965976)
+      elif (3 == switch_2):
+        $ 17 "Case 3"
+        $ 18 "MoveJ"
+        $ 19 "AssemblyTop" "breakAfter"
+        movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], AssemblyTop_p)), qnear=AssemblyTop_q), a=1.3962634015954636, v=1.0471975511965976)
+      end
+      $ 20 "qualityCheck≔0"
+      global qualityCheck=0
+    elif (2 == switch_1):
+      $ 21 "Case 2"
+      $ 22 "'Pick and hand over box of screws'"
+      # 'Pick and hand over box of screws'
+      $ 23 "MoveJ"
+      $ 24 "PosScrewsOffset" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosScrewsOffset_p)), qnear=PosScrewsOffset_q), a=1.3962634015954636, v=1.0471975511965976, r=0.05)
+      $ 25 "PosScrews" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosScrews_p)), qnear=PosScrews_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 26 "Wait: 2.0"
+      sleep(2.0)
+      $ 27 "MoveJ"
+      $ 28 "PosScrewsOffset" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosScrewsOffset_p)), qnear=PosScrewsOffset_q), a=1.3962634015954636, v=1.0471975511965976, r=0.05)
+      $ 29 "ScrewHandover" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], ScrewHandover_p)), qnear=ScrewHandover_q), a=1.3962634015954636, v=1.0471975511965976)
+    elif (3 == switch_1):
+      $ 30 "Case 3"
+      $ 31 "'Pick and hand over bottom plate'"
+      # 'Pick and hand over bottom plate'
+      $ 32 "MoveJ"
+      $ 33 "PosBotPlOffset" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosBotPlOffset_p)), qnear=PosBotPlOffset_q), a=1.3962634015954636, v=1.0471975511965976, r=0.05)
+      $ 34 "PosBottomPlate" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosBottomPlate_p)), qnear=PosBottomPlate_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 35 "Wait: 2.0"
+      sleep(2.0)
+      $ 36 "MoveJ"
+      $ 37 "PosBotPlOffset" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosBotPlOffset_p)), qnear=PosBotPlOffset_q), a=1.3962634015954636, v=1.0471975511965976, r=0.05)
+      $ 38 "PlateHandover" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PlateHandover_p)), qnear=PlateHandover_q), a=1.3962634015954636, v=1.0471975511965976)
+    elif (4 == switch_1):
+      $ 39 "Case 4"
+      $ 40 "'Grab and hold box in place for assembly (bottom plate)'"
+      # 'Grab and hold box in place for assembly (bottom plate)'
+      $ 41 "MoveJ"
+      $ 42 "PosBoxOffset" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosBoxOffset_p)), qnear=PosBoxOffset_q), a=1.3962634015954636, v=1.0471975511965976, r=0.025)
+      $ 43 "PosBox" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosBox_p)), qnear=PosBox_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 44 "Wait: 2.0"
+      sleep(2.0)
+      $ 45 "MoveJ"
+      $ 46 "PosBoxOffset" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosBoxOffset_p)), qnear=PosBoxOffset_q), a=1.3962634015954636, v=1.0471975511965976, r=0.05)
+      $ 47 "AssemblyBottom" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], AssemblyBottom_p)), qnear=AssemblyBottom_q), a=1.3962634015954636, v=1.0471975511965976)
+    elif (5 == switch_1):
+      $ 48 "Case 5"
+      $ 49 "'Check quality of assembly (bottom plate)'"
+      # 'Check quality of assembly (bottom plate)'
+      $ 50 "qualityCheck≔1"
+      global qualityCheck=1
+      $ 51 "MoveJ"
+      $ 52 "ScanPosBottom" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], ScanPosBottom_p)), qnear=ScanPosBottom_q), a=1.3962634015954636, v=1.0471975511965976)
+    elif (6 == switch_1):
+      $ 53 "Case 6"
+      $ 54 "'Put box aside and pick and hand over front plate'"
+      # 'Put box aside and pick and hand over front plate'
+      $ 55 "MoveJ"
+      $ 56 "PosBoxOffset" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosBoxOffset_p)), qnear=PosBoxOffset_q), a=1.3962634015954636, v=1.0471975511965976, r=0.025)
+      $ 57 "PosBox" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosBox_p)), qnear=PosBox_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 58 "Wait: 2.0"
+      sleep(2.0)
+      $ 59 "MoveJ"
+      $ 60 "PosFroPlOffset" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosFroPlOffset_p)), qnear=PosFroPlOffset_q), a=1.3962634015954636, v=1.0471975511965976, r=0.05)
+      $ 61 "PosFrontPlate" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosFrontPlate_p)), qnear=PosFrontPlate_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 62 "Wait: 2.0"
+      sleep(2.0)
+      $ 63 "MoveJ"
+      $ 64 "PosFroPlOffset" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosFroPlOffset_p)), qnear=PosFroPlOffset_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 65 "PlateHandover" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PlateHandover_p)), qnear=PlateHandover_q), a=1.3962634015954636, v=1.0471975511965976)
+    elif (7 == switch_1):
+      $ 66 "Case 7"
+      $ 67 "'Grab and hold box in place for assembly (front plate)'"
+      # 'Grab and hold box in place for assembly (front plate)'
+      $ 68 "MoveJ"
+      $ 69 "PosBoxOffset" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosBoxOffset_p)), qnear=PosBoxOffset_q), a=1.3962634015954636, v=1.0471975511965976, r=0.025)
+      $ 70 "PosBox" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosBox_p)), qnear=PosBox_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 71 "Wait: 2.0"
+      sleep(2.0)
+      $ 72 "MoveJ"
+      $ 73 "PosBoxOffset" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosBoxOffset_p)), qnear=PosBoxOffset_q), a=1.3962634015954636, v=1.0471975511965976, r=0.05)
+      $ 74 "AssemblyFront" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], AssemblyFront_p)), qnear=AssemblyFront_q), a=1.3962634015954636, v=1.0471975511965976)
+    elif (8 == switch_1):
+      $ 75 "Case 8"
+      $ 76 "'Check quality of assembly (front plate)'"
+      # 'Check quality of assembly (front plate)'
+      $ 77 "qualityCheck≔2"
+      global qualityCheck=2
+      $ 78 "MoveJ"
+      $ 79 "ScanPosFront" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], ScanPosFront_p)), qnear=ScanPosFront_q), a=1.3962634015954636, v=1.0471975511965976)
+    elif (9 == switch_1):
+      $ 80 "Case 9"
+      $ 81 "'Put box aside and pick and hand over top plate'"
+      # 'Put box aside and pick and hand over top plate'
+      $ 82 "MoveJ"
+      $ 83 "PosBoxOffset" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosBoxOffset_p)), qnear=PosBoxOffset_q), a=1.3962634015954636, v=1.0471975511965976, r=0.025)
+      $ 84 "PosBox" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosBox_p)), qnear=PosBox_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 85 "Wait: 2.0"
+      sleep(2.0)
+      $ 86 "MoveJ"
+      $ 87 "PosTopPlOffset" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosTopPlOffset_p)), qnear=PosTopPlOffset_q), a=1.3962634015954636, v=1.0471975511965976, r=0.05)
+      $ 88 "PosTopPlate" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosTopPlate_p)), qnear=PosTopPlate_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 89 "Wait: 2.0"
+      sleep(2.0)
+      $ 90 "MoveJ"
+      $ 91 "PosTopPlOffset" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosTopPlOffset_p)), qnear=PosTopPlOffset_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 92 "PlateHandover" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PlateHandover_p)), qnear=PlateHandover_q), a=1.3962634015954636, v=1.0471975511965976)
+    elif (10 == switch_1):
+      $ 93 "Case 10"
+      $ 94 "'Grab and hold box in place for assembly (top plate)'"
+      # 'Grab and hold box in place for assembly (top plate)'
+      $ 95 "MoveJ"
+      $ 96 "PosBoxOffset" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosBoxOffset_p)), qnear=PosBoxOffset_q), a=1.3962634015954636, v=1.0471975511965976, r=0.025)
+      $ 97 "PosBox" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosBox_p)), qnear=PosBox_q), a=1.3962634015954636, v=1.0471975511965976)
+      $ 98 "Wait: 2.0"
+      sleep(2.0)
+      $ 99 "MoveJ"
+      $ 100 "PosBoxOffset" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], PosBoxOffset_p)), qnear=PosBoxOffset_q), a=1.3962634015954636, v=1.0471975511965976, r=0.05)
+      $ 101 "AssemblyTop" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], AssemblyTop_p)), qnear=AssemblyTop_q), a=1.3962634015954636, v=1.0471975511965976)
+    elif (11 == switch_1):
+      $ 102 "Case 11"
+      $ 103 "'Check quality of assembly (top plate)'"
+      # 'Check quality of assembly (top plate)'
+      $ 104 "qualityCheck≔3"
+      global qualityCheck=3
+      $ 105 "MoveJ"
+      $ 106 "ScanPosTop" "breakAfter"
+      movej(get_inverse_kin(pose_trans(Workspace1, pose_trans(p[-.400000000000, .300000000000, -.100000000000, .000000000000, .000000000000, .000000000000], ScanPosTop_p)), qnear=ScanPosTop_q), a=1.3962634015954636, v=1.0471975511965976)
+    else:
+      $ 107 "Default Case"
+      $ 108 "'Do nothing (just handshake)'"
+      # 'Do nothing (just handshake)'
+    end
+    $ 109 "Set ob64=On"
+    write_output_boolean_register(64, True)
+    $ 110 "Wait ib64=LO"
+    while (read_input_boolean_register(64) == True):
+      sync()
+    end
+    $ 111 "Set ob64=Off"
+    write_output_boolean_register(64, False)
+  end
+end

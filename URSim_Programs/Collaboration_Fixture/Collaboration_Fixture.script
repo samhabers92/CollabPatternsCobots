@@ -1,0 +1,116 @@
+def Collaboration_Fixture():
+  set_tool_communication(False, 115200, 0, 1, 1.5, 3.5)
+  set_tool_output_mode(0)
+  set_tool_digital_output_mode(0, 1)
+  set_tool_digital_output_mode(1, 1)
+  set_tool_voltage(0)
+  set_gravity([0.0, 0.0, 9.82])
+  set_tcp(p[0.0,0.0,0.1,0.0,3.141592653589793,0.0])
+  set_standard_analog_input_domain(0, 1)
+  set_standard_analog_input_domain(1, 1)
+  set_tool_analog_input_domain(0, 1)
+  set_tool_analog_input_domain(1, 1)
+  set_analog_outputdomain(0, 0)
+  set_analog_outputdomain(1, 0)
+  set_input_actions_to_default()
+  set_safety_mode_transition_hardness(1)
+  step_count_ad2e6bc1_8197_4d38_8102_a1f7e7f8d2af = 0.0
+  thread Step_Counter_Thread_3cc0ca42_f1e9_448b_b5ef_f9c64eb23756():
+    while (True):
+      step_count_ad2e6bc1_8197_4d38_8102_a1f7e7f8d2af = step_count_ad2e6bc1_8197_4d38_8102_a1f7e7f8d2af + 1.0
+      sync()
+    end
+  end
+  run Step_Counter_Thread_3cc0ca42_f1e9_448b_b5ef_f9c64eb23756()
+  set_target_payload(0.001000, [0.000000, 0.000000, 0.000000], [0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000])
+  global GrabPos=p[2.0991532485899452E-11,0.49999999997281136,0.30000000001023613,1.1148903680638813E-9,-1.4651518143333174E-9,-2.87172902800227]
+  global GrabPosOffset=p[1.5458705234681828E-11,0.4999999999240369,0.349999999564173,1.1148901789464726E-9,-1.4651544978753436E-9,-2.87172902800227]
+  global MountingBotL=p[0.6999999994559698,-0.30000000266424587,0.3499999998899733,-1.2108966099525382,-1.2108966103161545,1.2081090044845377]
+  global MountingBotM=p[0.6999999996394124,-0.13329999990889918,0.3500000002186279,-1.2108966099529244,-1.210896610316711,1.2081090044841292]
+  global MountingBotR=p[0.6999999996394126,0.10000000000013361,0.3500000002186277,-1.2108966099529268,-1.2108966103167116,1.208109004484128]
+  global MountingTopL=p[0.6999999994559697,-0.30000000266424554,0.5500000001375991,-1.2108966099525438,-1.2108966103161485,1.2081090044845435]
+  global MountingTopM=p[0.6999999996394118,-0.1332999999088992,0.5500000001720571,-1.2108966099529341,-1.210896610316704,1.2081090044841318]
+  global MountingTopR=p[0.699999999639413,0.10000000000013275,0.550000000110026,-1.2108966099529253,-1.2108966103167118,1.2081090044841225]
+  while (True):
+    $ 1 "Robot Program"
+    $ 2 "Wait ib64=HI"
+    while (read_input_boolean_register(64) == False):
+      sync()
+    end
+    $ 3 "Switch ii24_step"
+    switch_1 = read_input_integer_register(24)
+    $ 4 "Case 1"
+    if (1 == switch_1):
+      $ 5 "'Move to Home position'"
+      # 'Move to Home position'
+      $ 6 "Home"
+      movej([1.762613743602493E-10, -1.3013558115863404, -1.7459769588716432, -0.879658046529256, 1.5707963266702691, 1.2462685963511231E-10], a=1.3962634015954636, v=1.0471975511965976)
+    elif (2 == switch_1):
+      $ 7 "Case 2"
+      $ 8 "'Move to pickup position and grab a part'"
+      # 'Move to pickup position and grab a part'
+      $ 9 "MoveJ"
+      $ 10 "GrabPosOffset" "breakAfter"
+      movej(GrabPosOffset, a=1.3962634015954636, v=1.0471975511965976)
+      $ 11 "MoveL"
+      $ 12 "GrabPos" "breakAfter"
+      movel(GrabPos, a=1.2, v=0.25)
+      $ 13 "Wait: 2.0"
+      sleep(2.0)
+      $ 14 "MoveL"
+      $ 15 "GrabPosOffset" "breakAfter"
+      movel(GrabPosOffset, a=1.2, v=0.25)
+      $ 16 "Home"
+      movej([1.762613743602493E-10, -1.3013558115863404, -1.7459769588716432, -0.879658046529256, 1.5707963266702691, 1.2462685963511231E-10], a=1.3962634015954636, v=1.0471975511965976)
+    elif (3 == switch_1):
+      $ 17 "Case 3"
+      $ 18 "'Move to mounting position'"
+      # 'Move to mounting position'
+      $ 19 "Switch ii25_actWspace"
+      switch_2 = read_input_integer_register(25)
+      $ 20 "Case 1"
+      if (1 == switch_2):
+        $ 21 "MoveJ"
+        $ 22 "MountingTopL" "breakAfter"
+        movej(MountingTopL, a=1.3962634015954636, v=1.0471975511965976)
+      elif (2 == switch_2):
+        $ 23 "Case 2"
+        $ 24 "MoveJ"
+        $ 25 "MountingTopM" "breakAfter"
+        movej(MountingTopM, a=1.3962634015954636, v=1.0471975511965976)
+      elif (3 == switch_2):
+        $ 26 "Case 3"
+        $ 27 "MoveJ"
+        $ 28 "MountingTopR" "breakAfter"
+        movej(MountingTopR, a=1.3962634015954636, v=1.0471975511965976)
+      elif (4 == switch_2):
+        $ 29 "Case 4"
+        $ 30 "MoveJ"
+        $ 31 "MountingBotL" "breakAfter"
+        movej(MountingBotL, a=1.3962634015954636, v=1.0471975511965976)
+      elif (5 == switch_2):
+        $ 32 "Case 5"
+        $ 33 "MoveJ"
+        $ 34 "MountingBotM" "breakAfter"
+        movej(MountingBotM, a=1.3962634015954636, v=1.0471975511965976)
+      elif (6 == switch_2):
+        $ 35 "Case 6"
+        $ 36 "MoveJ"
+        $ 37 "MountingBotR" "breakAfter"
+        movej(MountingBotR, a=1.3962634015954636, v=1.0471975511965976)
+      end
+    else:
+      $ 38 "Default Case"
+      $ 39 "'Do nothing (just handshake)'"
+      # 'Do nothing (just handshake)'
+    end
+    $ 40 "Set ob64=On"
+    write_output_boolean_register(64, True)
+    $ 41 "Wait ib64=LO"
+    while (read_input_boolean_register(64) == True):
+      sync()
+    end
+    $ 42 "Set ob64=Off"
+    write_output_boolean_register(64, False)
+  end
+end

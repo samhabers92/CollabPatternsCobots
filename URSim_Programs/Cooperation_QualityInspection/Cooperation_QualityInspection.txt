@@ -1,0 +1,43 @@
+ Program
+   Robot Program
+     Wait ib64=HI
+     Switch ii24_step
+       Case 1
+         'Move to Home position'
+         Home
+       Case 2
+         MoveL
+           WaitPos
+         'Read inspectionPos'
+         inspectionPos≔p[if24_x,if25_y,if26_z,if27_rx,if28_ry,if29_rz]
+         'Move: inspectionPos'
+         Switch ii25_actWspace
+           Case 1
+             MoveL
+               inspectionPos
+           Case 2
+             MoveL
+               inspectionPos
+           Case 3
+             MoveL
+               inspectionPos
+           Case 4
+             MoveL
+               inspectionPos
+           Case 5
+             MoveL
+               inspectionPos
+           Case 6
+             MoveL
+               inspectionPos
+           Case 7
+             MoveL
+               inspectionPos
+           Case 8
+             MoveL
+               inspectionPos
+       Default Case
+         'Do nothing (just handshake)'
+     Set ob64=On
+     Wait ib64=LO
+     Set ob64=Off

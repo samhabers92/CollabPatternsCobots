@@ -1,0 +1,43 @@
+ Program
+   Robot Program
+     Wait ib64=HI
+     Switch ii24_step
+       Case 1
+         'Move to Home position'
+         Home
+       Case 2
+         'Move to pickup position and grab a part'
+         MoveJ
+           GrabPosOffset
+         MoveL
+           GrabPos
+         Wait: 2.0
+         MoveL
+           GrabPosOffset
+         Home
+       Case 3
+         'Move to mounting position'
+         Switch ii25_actWspace
+           Case 1
+             MoveJ
+               MountingTopL
+           Case 2
+             MoveJ
+               MountingTopM
+           Case 3
+             MoveJ
+               MountingTopR
+           Case 4
+             MoveJ
+               MountingBotL
+           Case 5
+             MoveJ
+               MountingBotM
+           Case 6
+             MoveJ
+               MountingBotR
+       Default Case
+         'Do nothing (just handshake)'
+     Set ob64=On
+     Wait ib64=LO
+     Set ob64=Off

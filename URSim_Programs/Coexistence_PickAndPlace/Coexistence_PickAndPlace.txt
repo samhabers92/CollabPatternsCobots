@@ -1,0 +1,36 @@
+ Program
+   Robot Program
+     Wait ib64=HI
+     Switch ii24_step
+       Case 1
+         'Move to Home position'
+         Home
+       Case 2
+         'Read new position and active workspace and move there'
+         Pos≔p[if24_x,if25_y,if26_z,if27_rx,if28_ry,if29_rz]
+         Switch ii25_actWspace
+           Case 0
+             MoveJ
+               Pos
+           Case 1
+             MoveJ
+               Pos
+       Case 3
+         'Pick part (simulated by wait)'
+         Wait: 2.0
+       Case 4
+         'Lift part (lift 20cm)'
+         MoveL
+           Direction: Partbox Z+
+             Until (distance)
+       Case 5
+         'Place part (simulated by wait)'
+         Wait: 2.0
+         MoveL
+           Direction: Placelocation Z+
+             Until (distance)
+       Default Case
+         'Do nothing (just handshake)'
+     Set ob64=On
+     Wait ib64=LO
+     Set ob64=Off

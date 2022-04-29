@@ -1,0 +1,21 @@
+ Program
+   Robot Program
+     Wait ib64=HI
+     Switch ii24_step
+       Case 1
+         'Move to Home position'
+         Home
+       Case 2
+         'Read startPos, endPos'
+         startPos≔p[if24_x,if25_y,if26_z,if27_rx,if28_ry,if29_rz]
+         endPos≔p[if30_x,if31_y,if32_z,if33_rx,if34_ry,if35_rz]
+         'Move: startPos -> endPos -> startPos'
+         MoveL
+           startPos
+           endPos
+           startPos
+       Default Case
+         'Do nothing (just handshake)'
+     Set ob64=On
+     Wait ib64=LO
+     Set ob64=Off

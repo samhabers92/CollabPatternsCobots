@@ -1,0 +1,112 @@
+ Program
+   Init Variables
+   Robot Program
+     Wait ib64=HI
+     Switch ii24_step
+       Case 0
+         'Just to start the program in home position'
+         Home
+       Case 1
+         'Keep holding box in place for assembly'
+         Switch qualityCheck
+           Case 1
+             MoveJ
+               AssemblyBottom
+           Case 2
+             MoveJ
+               AssemblyFront
+           Case 3
+             MoveJ
+               AssemblyTop
+         qualityCheck≔0
+       Case 2
+         'Pick and hand over box of screws'
+         MoveJ
+           PosScrewsOffset
+           PosScrews
+         Wait: 2.0
+         MoveJ
+           PosScrewsOffset
+           ScrewHandover
+       Case 3
+         'Pick and hand over bottom plate'
+         MoveJ
+           PosBotPlOffset
+           PosBottomPlate
+         Wait: 2.0
+         MoveJ
+           PosBotPlOffset
+           PlateHandover
+       Case 4
+         'Grab and hold box in place for assembly (bottom plate)'
+         MoveJ
+           PosBoxOffset
+           PosBox
+         Wait: 2.0
+         MoveJ
+           PosBoxOffset
+           AssemblyBottom
+       Case 5
+         'Check quality of assembly (bottom plate)'
+         qualityCheck≔1
+         MoveJ
+           ScanPosBottom
+       Case 6
+         'Put box aside and pick and hand over front plate'
+         MoveJ
+           PosBoxOffset
+           PosBox
+         Wait: 2.0
+         MoveJ
+           PosFroPlOffset
+           PosFrontPlate
+         Wait: 2.0
+         MoveJ
+           PosFroPlOffset
+           PlateHandover
+       Case 7
+         'Grab and hold box in place for assembly (front plate)'
+         MoveJ
+           PosBoxOffset
+           PosBox
+         Wait: 2.0
+         MoveJ
+           PosBoxOffset
+           AssemblyFront
+       Case 8
+         'Check quality of assembly (front plate)'
+         qualityCheck≔2
+         MoveJ
+           ScanPosFront
+       Case 9
+         'Put box aside and pick and hand over top plate'
+         MoveJ
+           PosBoxOffset
+           PosBox
+         Wait: 2.0
+         MoveJ
+           PosTopPlOffset
+           PosTopPlate
+         Wait: 2.0
+         MoveJ
+           PosTopPlOffset
+           PlateHandover
+       Case 10
+         'Grab and hold box in place for assembly (top plate)'
+         MoveJ
+           PosBoxOffset
+           PosBox
+         Wait: 2.0
+         MoveJ
+           PosBoxOffset
+           AssemblyTop
+       Case 11
+         'Check quality of assembly (top plate)'
+         qualityCheck≔3
+         MoveJ
+           ScanPosTop
+       Default Case
+         'Do nothing (just handshake)'
+     Set ob64=On
+     Wait ib64=LO
+     Set ob64=Off

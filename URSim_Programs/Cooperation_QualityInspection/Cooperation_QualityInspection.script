@@ -1,0 +1,117 @@
+def Cooperation_QualityInspection():
+  set_tool_communication(False, 115200, 0, 1, 1.5, 3.5)
+  set_tool_output_mode(0)
+  set_tool_digital_output_mode(0, 1)
+  set_tool_digital_output_mode(1, 1)
+  set_tool_voltage(0)
+  set_safety_mode_transition_hardness(1)
+  step_count_7441b485_d0bc_4497_bfee_119e85b74c95 = 0.0
+  thread Step_Counter_Thread_117ba636_092e_42c1_87bf_86e45293f769():
+    while (True):
+      step_count_7441b485_d0bc_4497_bfee_119e85b74c95 = step_count_7441b485_d0bc_4497_bfee_119e85b74c95 + 1.0
+      sync()
+    end
+  end
+  run Step_Counter_Thread_117ba636_092e_42c1_87bf_86e45293f769()
+  set_gravity([0.0, -1.2026031567627009E-15, -9.82])
+  set_target_payload(0.001000, [0.000000, 0.000000, 0.000000], [0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000])
+  set_tcp(p[0.0,0.0,0.1,0.0,3.141592653589793,0.0])
+  set_standard_analog_input_domain(0, 1)
+  set_standard_analog_input_domain(1, 1)
+  set_tool_analog_input_domain(0, 1)
+  set_tool_analog_input_domain(1, 1)
+  set_analog_outputdomain(0, 0)
+  set_analog_outputdomain(1, 0)
+  set_input_actions_to_default()
+  global BackLeftBot_1=p[0.6005878819624197,0.1857009569427569,0.6247136765669732,1.5481496559467547,-1.7612495795630887,-1.1400099058827384]
+  global BackLeftBot_2=p[0.5978604315736225,0.13493183369983958,0.6247136764667552,1.8421595392661896,-1.2633498754615393,-0.8819660309577494]
+  global BackLeftTop_1=p[0.6005878816464556,0.1857009566078342,0.4997696512445338,1.548149650159683,-1.7612495829019952,-1.1400099069008418]
+  global BackLeftTop_2=p[0.5978604314947759,0.13493183365175296,0.4908834964912926,1.8421595253466347,-1.2633498972640314,-0.8819660250180734]
+  global BackRightBot_1=p[0.5144832546714916,-0.343912239518281,0.6866108683848899,1.5564410077301656,-1.7603583481964669,-0.09015851927221176]
+  global BackRightBot_2=p[0.5164704002382682,-0.3069232450784425,0.6866108683170351,2.1797019178684,-1.8570140376692248,-0.9815051002221078]
+  global BackRightTop_1=p[0.5144832546192013,-0.3439122394907813,0.56886853509152,1.5564410085605471,-1.760358339846334,-0.09015852801661485]
+  global BackRightTop_2=p[0.5164704000338758,-0.3069232450253033,0.551283868364539,2.1797019178684094,-1.8570140376692135,-0.9815051002221156]
+  global WaitPos=p[0.5257978960861115,-0.13330000005172882,0.514408670588503,1.9268745081465113,-1.9268745076454066,-0.5163044683456]
+  while (True):
+    $ 1 "Robot Program"
+    $ 2 "Wait ib64=HI"
+    while (read_input_boolean_register(64) == False):
+      sync()
+    end
+    $ 3 "Switch ii24_step"
+    switch_1 = read_input_integer_register(24)
+    $ 4 "Case 1"
+    if (1 == switch_1):
+      $ 5 "'Move to Home position'"
+      # 'Move to Home position'
+      $ 6 "Home"
+      movej([0.0, 0.0, -2.6179938779914944, -2.094395102393195, -1.5707963267948966, 4.440892098500626E-16], a=1.3962634015954636, v=1.0471975511965976)
+    elif (2 == switch_1):
+      $ 7 "Case 2"
+      $ 8 "MoveL"
+      $ 9 "WaitPos" "breakAfter"
+      movel(WaitPos, a=1.2, v=0.25)
+      $ 10 "'Read inspectionPos'"
+      # 'Read inspectionPos'
+      $ 11 "inspectionPos≔p[if24_x,if25_y,if26_z,if27_rx,if28_ry,if29_rz]"
+      global inspectionPos=p[read_input_float_register(24),read_input_float_register(25),read_input_float_register(26),read_input_float_register(27),read_input_float_register(28),read_input_float_register(29)]
+      $ 12 "'Move: inspectionPos'"
+      # 'Move: inspectionPos'
+      $ 13 "Switch ii25_actWspace"
+      switch_2 = read_input_integer_register(25)
+      $ 14 "Case 1"
+      if (1 == switch_2):
+        $ 15 "MoveL"
+        $ 16 "inspectionPos" "breakAfter"
+        movel(pose_trans(BackLeftBot_1, inspectionPos), a=1.2, v=0.25)
+      elif (2 == switch_2):
+        $ 17 "Case 2"
+        $ 18 "MoveL"
+        $ 19 "inspectionPos" "breakAfter"
+        movel(pose_trans(BackLeftBot_2, inspectionPos), a=1.2, v=0.25)
+      elif (3 == switch_2):
+        $ 20 "Case 3"
+        $ 21 "MoveL"
+        $ 22 "inspectionPos" "breakAfter"
+        movel(pose_trans(BackLeftTop_1, inspectionPos), a=1.2, v=0.25)
+      elif (4 == switch_2):
+        $ 23 "Case 4"
+        $ 24 "MoveL"
+        $ 25 "inspectionPos" "breakAfter"
+        movel(pose_trans(BackLeftTop_2, inspectionPos), a=1.2, v=0.25)
+      elif (5 == switch_2):
+        $ 26 "Case 5"
+        $ 27 "MoveL"
+        $ 28 "inspectionPos" "breakAfter"
+        movel(pose_trans(BackRightBot_1, inspectionPos), a=1.2, v=0.25)
+      elif (6 == switch_2):
+        $ 29 "Case 6"
+        $ 30 "MoveL"
+        $ 31 "inspectionPos" "breakAfter"
+        movel(pose_trans(BackRightBot_2, inspectionPos), a=1.2, v=0.25)
+      elif (7 == switch_2):
+        $ 32 "Case 7"
+        $ 33 "MoveL"
+        $ 34 "inspectionPos" "breakAfter"
+        movel(pose_trans(BackRightTop_1, inspectionPos), a=1.2, v=0.25)
+      elif (8 == switch_2):
+        $ 35 "Case 8"
+        $ 36 "MoveL"
+        $ 37 "inspectionPos" "breakAfter"
+        movel(pose_trans(BackRightTop_2, inspectionPos), a=1.2, v=0.25)
+      end
+    else:
+      $ 38 "Default Case"
+      $ 39 "'Do nothing (just handshake)'"
+      # 'Do nothing (just handshake)'
+    end
+    $ 40 "Set ob64=On"
+    write_output_boolean_register(64, True)
+    $ 41 "Wait ib64=LO"
+    while (read_input_boolean_register(64) == True):
+      sync()
+    end
+    $ 42 "Set ob64=Off"
+    write_output_boolean_register(64, False)
+  end
+end

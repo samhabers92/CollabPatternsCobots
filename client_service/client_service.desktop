@@ -1,0 +1,6 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=true
+Name=client_service
+Exec=/home/wfms/client_service/client_service.rb

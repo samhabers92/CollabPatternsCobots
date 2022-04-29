@@ -1,0 +1,6 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=true
+Name=URUA Devserver
+Exec=/home/cobot/urua/server/devserver.rb start -v

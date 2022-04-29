@@ -1,0 +1,52 @@
+def Synchronized_SpotTaping():
+  set_target_payload(0.001000, [0.000000, 0.000000, 0.000000], [0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000])
+  set_tool_communication(False, 115200, 0, 1, 1.5, 3.5)
+  set_tool_output_mode(0)
+  set_tool_digital_output_mode(0, 1)
+  set_tool_digital_output_mode(1, 1)
+  set_tool_voltage(0)
+  set_gravity([0.0, 0.0, 9.82])
+  set_standard_analog_input_domain(0, 1)
+  set_standard_analog_input_domain(1, 1)
+  set_tool_analog_input_domain(0, 1)
+  set_tool_analog_input_domain(1, 1)
+  set_analog_outputdomain(0, 0)
+  set_analog_outputdomain(1, 0)
+  set_input_actions_to_default()
+  set_safety_mode_transition_hardness(1)
+  step_count_fa6c09b9_4757_4691_94d8_f6951660269f = 0.0
+  thread Step_Counter_Thread_fbd7ae00_f8ad_4465_9665_e5ee3640e9b8():
+    while (True):
+      step_count_fa6c09b9_4757_4691_94d8_f6951660269f = step_count_fa6c09b9_4757_4691_94d8_f6951660269f + 1.0
+      sync()
+    end
+  end
+  run Step_Counter_Thread_fbd7ae00_f8ad_4465_9665_e5ee3640e9b8()
+  set_tcp(p[0.0,0.0,0.1,0.0,3.141592653589793,0.0])
+  global Workspace1=p[0.4889643391615496,-0.1332999999953508,0.2395327529218116,5.003621840917098E-16,-0.5235987755982967,-4.135370325122088E-16]
+  while (True):
+    $ 1 "Robot Program"
+    $ 2 "Wait ib64=HI"
+    while (read_input_boolean_register(64) == False):
+      sync()
+    end
+    $ 3 "Pos1≔p[if24_x,if25_y,if26_z,if27_rx,if28_ry,if29_rz]"
+    global Pos1=p[read_input_float_register(24),read_input_float_register(25),read_input_float_register(26),read_input_float_register(27),read_input_float_register(28),read_input_float_register(29)]
+    $ 4 "MoveL"
+    $ 5 "Pos1" "breakAfter"
+    set_tcp(p[0.0,0.0,0.1,0.0,3.141592653589793,0.0])
+    movel(pose_trans(Workspace1, Pos1), a=1.2, v=0.25)
+    $ 6 "Wait: 2.0"
+    sleep(2.0)
+    $ 7 "Home"
+    movej([8.92944443900068E-10, -1.0055551254619814, -1.361999894564386, -1.8212351845549204, 1.5707963261708011, 1.5707963276707613], a=1.3962634015954636, v=1.0471975511965976)
+    $ 8 "Set ob64=On"
+    write_output_boolean_register(64, True)
+    $ 9 "Wait ib64=LO"
+    while (read_input_boolean_register(64) == True):
+      sync()
+    end
+    $ 10 "Set ob64=Off"
+    write_output_boolean_register(64, False)
+  end
+end
